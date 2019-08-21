@@ -1,18 +1,21 @@
 package tk.doraneko.tcpchat.simple;
 
-import java.io.BufferedInputStream;
-import java.io.DataInputStream;
-import java.io.IOException;
+import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 
 /**
  * Created by @tranphuquy19 on 22/08/2019
+ * Email:       tranphuquy19@gmail.com
+ */
+
+/**
+ * Server accept single client
  */
 public class Server {
     private Socket socket = null;
     private ServerSocket serverSocket = null;
-    private DataInputStream dataInputStream = null;
+    private BufferedReader bufferedReader = null;
 
     public Server(int port) {
         System.out.println("Server is starting in port: " + port);
@@ -26,11 +29,9 @@ public class Server {
             System.out.println("Client accepted: ");
             System.out.println("socket = " + socket);
             open();
-            boolean done = false;
-            while (!done) {
-                String line = dataInputStream.readUTF();
+            String line = "";
+            while((line = bufferedReader.readLine()) != null){
                 System.out.println(line);
-                done = line.trim().equals(".bye");
             }
             close();
         } catch (IOException e) {
@@ -39,22 +40,31 @@ public class Server {
     }
 
     private void close() throws IOException {
-        if (socket != null) {
+        if(socket != null){
             socket.close();
         }
-        if (dataInputStream != null) {
-            dataInputStream.close();
+        if(bufferedReader != null){
+            bufferedReader.close();
+        }
+        if(serverSocket != null){
+            serverSocket.close();
         }
     }
 
     private void open() throws IOException {
-        dataInputStream = new DataInputStream(new BufferedInputStream(socket.getInputStream()));
+        bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
     }
 
     public static void main(String[] args) {
+        final int port = 16057;
         Server server;
         if(args.length != 1){
-            System.out.println("Server start is default port: ");
+            System.out.println("Server start is default port: " + port);
+            server = new Server(port);
+        }else{
+            int newPort = Integer.parseInt(args[0]);
+            System.out.println("Server start in new port: " + newPort);
+            server = new Server(newPort);
         }
     }
 }
