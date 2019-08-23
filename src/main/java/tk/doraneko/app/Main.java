@@ -35,7 +35,7 @@ public class Main {
             } catch (InputMismatchException e) {
                 continue;
             }
-            if (options == 0 || options > (Classs.values().length - 1)) {
+            if (options == 0 || options > (Classs.values().length)) {
                 System.out.println(ConsoleColors.YELLOW_BRIGHT + "ERROR, Chon ngoai pham vi!" + ConsoleColors.RESET);
                 continue;
             } else if (options < 0) {
