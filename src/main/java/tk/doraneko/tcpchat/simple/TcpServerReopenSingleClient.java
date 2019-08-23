@@ -14,13 +14,14 @@ import java.net.Socket;
 /**
  * Server hoạt động trở lại khi client ngắt kết nối
  */
-public class ServerReopenSingleClient implements Runnable {
+public class TcpServerReopenSingleClient implements Runnable {
     private Socket socket;
     private ServerSocket serverSocket;
     private Thread thread;
     private BufferedReader bufferedReader;
 
-    public ServerReopenSingleClient(int port) {
+    public TcpServerReopenSingleClient(int port) {
+        System.out.println("Server type: " + getClass().getSimpleName());
         System.out.println("Server is starting in port: " + port);
 
         try {
@@ -73,6 +74,11 @@ public class ServerReopenSingleClient implements Runnable {
                 while((line = bufferedReader.readLine()) != null){
                     System.out.println(line);
                     if(line.trim().equals(".bye")) break;
+                    if(line.trim().equals(".stop")){
+                        close();
+                        stop();
+                        break;
+                    }
                 }
             } catch (IOException e) {
                 e.printStackTrace();
@@ -82,14 +88,12 @@ public class ServerReopenSingleClient implements Runnable {
 
     public static void main(String[] args) {
         final int port = 16057;
-        ServerReopenSingleClient server;
+        TcpServerReopenSingleClient server;
         if(args.length != 1){
-            System.out.println("Server start is default port: " + port);
-            server = new ServerReopenSingleClient(port);
+            server = new TcpServerReopenSingleClient(port);
         }else{
             int newPort = Integer.parseInt(args[0]);
-            System.out.println("Server start in new port: " + newPort);
-            server = new ServerReopenSingleClient(newPort);
+            server = new TcpServerReopenSingleClient(newPort);
         }
     }
 }

@@ -12,12 +12,13 @@ import java.net.Socket;
 /**
  * Server accept single client
  */
-public class ServerSingleClient {
+public class TcpServerSingleClient {
     private Socket socket;
     private ServerSocket serverSocket;
     private BufferedReader bufferedReader;
 
-    public ServerSingleClient(int port) {
+    public TcpServerSingleClient(int port) {
+        System.out.println("Server type: " + getClass().getSimpleName());
         System.out.println("Server is starting in port: " + port);
 
         try {
@@ -58,14 +59,14 @@ public class ServerSingleClient {
 
     public static void main(String[] args) {
         final int port = 16057;
-        ServerSingleClient server;
+        TcpServerSingleClient server;
         if(args.length != 1){
             System.out.println("Server start is default port: " + port);
-            server = new ServerSingleClient(port);
+            server = new TcpServerSingleClient(port);
         }else{
             int newPort = Integer.parseInt(args[0]);
             System.out.println("Server start in new port: " + newPort);
-            server = new ServerSingleClient(newPort);
+            server = new TcpServerSingleClient(newPort);
         }
     }
 }

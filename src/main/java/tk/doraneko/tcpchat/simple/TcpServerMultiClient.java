@@ -14,14 +14,15 @@ import java.net.Socket;
 
 /**
  * Server multi thread đáp ứng nhiều client cùng 1 lúc
- *  respone về client mess: OK
+ * respone về client mess: OK
  */
-public class ServerMultiClient implements Runnable {
+public class TcpServerMultiClient implements Runnable {
     private ServerSocket serverSocket;
     private Thread thread;
     private ServerThread serverThread;
 
-    public ServerMultiClient(int port) {
+    public TcpServerMultiClient(int port) {
+        System.out.println("Server type: " + getClass().getSimpleName());
         System.out.println("Server is starting in port: " + port);
         try {
             serverSocket = new ServerSocket(port);
@@ -73,25 +74,25 @@ public class ServerMultiClient implements Runnable {
 
     public static void main(String[] args) {
         final int port = 16057;
-        ServerMultiClient server;
+        TcpServerMultiClient server;
         if (args.length != 1) {
             System.out.println("Server start is default port: " + port);
-            server = new ServerMultiClient(port);
+            server = new TcpServerMultiClient(port);
         } else {
             int newPort = Integer.parseInt(args[0]);
             System.out.println("Server start in new port: " + newPort);
-            server = new ServerMultiClient(newPort);
+            server = new TcpServerMultiClient(newPort);
         }
     }
 
-    private static class ServerThread extends Thread {
+    private class ServerThread extends Thread {
         private Socket socket;
-        private ServerMultiClient serverMultiClient;
+        private TcpServerMultiClient serverMultiClient;
         private BufferedReader bufferedReader;
         private int endPointPort = -1;
         private PrintWriter printWriter;
 
-        public ServerThread(ServerMultiClient server, Socket socket) {
+        public ServerThread(TcpServerMultiClient server, Socket socket) {
             this.serverMultiClient = server;
             this.socket = socket;
             this.endPointPort = socket.getPort();
@@ -118,7 +119,15 @@ public class ServerMultiClient implements Runnable {
                 while ((line = bufferedReader.readLine()) != null) {
                     System.out.println("Client[" + endPointPort + "] send: " + line);
                     printWriter.println("Server send to [" + endPointPort + "] : OK");
-                    if (line.trim().equals(".bye")) break;
+                    if (line.trim().equals(".bye")) {
+                        close();
+                        break;
+                    }
+                    if (line.trim().equals(".stop")) {
+                        close();
+                        serverMultiClient.stop();
+                        break;
+                    }
                 }
             } catch (IOException e) {
                 e.printStackTrace();
