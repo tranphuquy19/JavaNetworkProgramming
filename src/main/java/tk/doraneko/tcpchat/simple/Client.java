@@ -13,6 +13,11 @@ public class Client {
     private Scanner sc;
     private PrintWriter printWriter;
 
+    /**
+     * Thiết lập kết nối đến server theo IP và port của server
+     * @param serverIP IP của Server
+     * @param serverPort Port của Server
+     */
     public Client(String serverIP, int serverPort) {
         System.out.println("Establishing connection...");
         try {
@@ -20,6 +25,7 @@ public class Client {
             System.out.println("You connect to the server successfully");
             System.out.println("Connected: " + socket);
             start();
+            listenServer();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -39,6 +45,41 @@ public class Client {
         if (socket != null) socket.close();
     }
 
+    private void listenServer() {
+        new ClientListeningServer(socket).start();
+    }
+
+    private class ClientListeningServer extends Thread {
+        private Socket socket;
+        private BufferedReader bufferedReader;
+
+        public ClientListeningServer(Socket socket) {
+            this.socket = socket;
+            try {
+                open();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        private void open() throws IOException{
+            bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+        }
+
+        @Override
+        public void run() {
+            super.run();
+            String line = "";
+            try {
+                while ((line = bufferedReader.readLine()) != null) {
+                    System.out.println(line);
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
     public static void main(String[] args) {
         final String _serverIP = "0.0.0.0";
         final int _serverPort = 16057;
@@ -47,7 +88,7 @@ public class Client {
         if (args.length != 2) {
             System.err.println("Connect to server using DEFAULT_IP and DEFAULT_IP");
             client = new Client(_serverIP, _serverPort);
-        }else{
+        } else {
             String serverIP = args[0];
             int serverPort = Integer.parseInt(args[1]);
             client = new Client(serverIP, serverPort);
