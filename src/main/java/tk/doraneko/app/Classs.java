@@ -11,10 +11,10 @@ import tk.doraneko.tcpchat.simple.TcpServerSingleClient;
  */
 public enum Classs {
 
-    SERVER_SINGLE_CLIENT(0, TcpServerSingleClient.class),
-    SERVER_REOPEN_SINGLE_CLIENT(1, TcpServerReopenSingleClient.class),
-    SERVER_MULTI_CLIENT(2, TcpServerMultiClient.class),
-    CLIENT(3, TcpClient.class);
+    SERVER_SINGLE_CLIENT(1, TcpServerSingleClient.class),
+    SERVER_REOPEN_SINGLE_CLIENT(2, TcpServerReopenSingleClient.class),
+    SERVER_MULTI_CLIENT(3, TcpServerMultiClient.class),
+    CLIENT(4, TcpClient.class);
 
     private final String URL_GIT_REMOTE_BASE = "https://github.com/tranphuquy19/JavaNetworkProgramming/blob/master/src/main/java/";
 

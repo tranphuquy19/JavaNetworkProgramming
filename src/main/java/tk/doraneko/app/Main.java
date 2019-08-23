@@ -26,7 +26,7 @@ public class Main {
             int options = 0;
             System.out.println(ConsoleColors.YELLOW + "If you find bugs. Congratulations, that's new feature @tranphuquy19" + ConsoleColors.RESET);
             System.out.println(ConsoleColors.GREEN + " Cac bai lap trong mon lap trinh mang" + ConsoleColors.RESET);
-            System.out.println(ConsoleColors.GREEN + "Chon cac phim de start chuong trinh, Ctrl+C de stop chuong trinh" + ConsoleColors.RESET);
+            System.out.println(ConsoleColors.GREEN + "Enter so am (-) de show code, Ctrl+C de stop chuong trinh" + ConsoleColors.RESET);
             getClasss();
             System.out.print(ConsoleColors.RED_BOLD + "Enter: " + ConsoleColors.RESET);
 
@@ -35,17 +35,24 @@ public class Main {
             } catch (InputMismatchException e) {
                 continue;
             }
-            if (options < 0 || options > (Classs.values().length - 1)) {
+            if (options == 0 || options > (Classs.values().length - 1)) {
                 System.out.println(ConsoleColors.YELLOW_BRIGHT + "ERROR, Chon ngoai pham vi!" + ConsoleColors.RESET);
                 continue;
+            } else if (options < 0) {
+                try {
+                    JavaProcess.openCode(options * -1);
+                } catch (IOException e) {
+                }
+            } else {
+                try {
+                    int status = JavaProcess.exec(Classs.findByIndex(options).getClassEntity());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
-            try {
-                int status = JavaProcess.exec(Classs.findByIndex(options).getClassEntity());
-            } catch (IOException e) {
-                e.printStackTrace();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+
         }
 
     }
