@@ -86,7 +86,7 @@ public class TcpClient {
         TcpClient client;
 
         if (args.length != 2) {
-            System.err.println("Connect to server using DEFAULT_IP and DEFAULT_IP");
+            System.err.println("Connect to server using DEFAULT_IP and DEFAULT_PORT");
             client = new TcpClient(_serverIP, _serverPort);
         } else {
             String serverIP = args[0];
