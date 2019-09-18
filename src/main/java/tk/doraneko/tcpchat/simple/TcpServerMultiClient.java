@@ -74,14 +74,13 @@ public class TcpServerMultiClient implements Runnable {
 
     public static void main(String[] args) {
         final int port = 16057;
-        TcpServerMultiClient server;
         if (args.length != 1) {
             System.out.println("Server start is default port: " + port);
-            server = new TcpServerMultiClient(port);
+            new TcpServerMultiClient(port);
         } else {
             int newPort = Integer.parseInt(args[0]);
             System.out.println("Server start in new port: " + newPort);
-            server = new TcpServerMultiClient(newPort);
+            new TcpServerMultiClient(newPort);
         }
     }
 

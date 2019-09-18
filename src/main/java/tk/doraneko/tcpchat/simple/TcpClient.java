@@ -83,15 +83,14 @@ public class TcpClient {
     public static void main(String[] args) {
         final String _serverIP = "0.0.0.0";
         final int _serverPort = 16057;
-        TcpClient client;
 
         if (args.length != 2) {
             System.err.println("Connect to server using DEFAULT_IP and DEFAULT_PORT");
-            client = new TcpClient(_serverIP, _serverPort);
+            new TcpClient(_serverIP, _serverPort);
         } else {
             String serverIP = args[0];
             int serverPort = Integer.parseInt(args[1]);
-            client = new TcpClient(serverIP, serverPort);
+            new TcpClient(serverIP, serverPort);
         }
     }
 }
