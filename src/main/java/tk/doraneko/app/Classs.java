@@ -4,6 +4,8 @@ import tk.doraneko.tcpchat.simple.TcpClient;
 import tk.doraneko.tcpchat.simple.TcpServerMultiClient;
 import tk.doraneko.tcpchat.simple.TcpServerReopenSingleClient;
 import tk.doraneko.tcpchat.simple.TcpServerSingleClient;
+import tk.doraneko.udpchat.simple.UdpClient;
+import tk.doraneko.udpchat.simple.UdpServer;
 
 /**
  * Created by @tranphuquy19 on 23/08/2019
@@ -11,10 +13,13 @@ import tk.doraneko.tcpchat.simple.TcpServerSingleClient;
  */
 public enum Classs {
 
-    SERVER_SINGLE_CLIENT(1, TcpServerSingleClient.class),
-    SERVER_REOPEN_SINGLE_CLIENT(2, TcpServerReopenSingleClient.class),
-    SERVER_MULTI_CLIENT(3, TcpServerMultiClient.class),
-    CLIENT(4, TcpClient.class);
+    TCP_SERVER_SINGLE_CLIENT(1, TcpServerSingleClient.class),
+    TCP_SERVER_REOPEN_SINGLE_CLIENT(2, TcpServerReopenSingleClient.class),
+    TCP_SERVER_MULTI_CLIENT(3, TcpServerMultiClient.class),
+    TCP_CLIENT(4, TcpClient.class),
+
+    UDP_SERVER_SINGLE_CLIENT(5, UdpServer.class),
+    UDP_CLIENT(6, UdpClient.class);
 
     private final String URL_GIT_REMOTE_BASE = "https://github.com/tranphuquy19/JavaNetworkProgramming/blob/master/src/main/java/";
 
