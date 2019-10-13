@@ -1,4 +1,4 @@
-package tk.doraneko.udpchat.simple;
+package tk.doraneko.udp.chat.simple;
 
 import java.io.IOException;
 import java.net.DatagramPacket;

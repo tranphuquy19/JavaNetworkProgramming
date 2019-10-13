@@ -1,4 +1,4 @@
-package tk.doraneko.tcpchat.simple;
+package tk.doraneko.tcp.chat.simple;
 
 /**
  * Created by @tranphuquy19 on 22/08/2019

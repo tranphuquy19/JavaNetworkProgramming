@@ -1,11 +1,11 @@
 package tk.doraneko.app;
 
-import tk.doraneko.tcpchat.simple.TcpClient;
-import tk.doraneko.tcpchat.simple.TcpServerMultiClient;
-import tk.doraneko.tcpchat.simple.TcpServerReopenSingleClient;
-import tk.doraneko.tcpchat.simple.TcpServerSingleClient;
-import tk.doraneko.udpchat.simple.UdpClient;
-import tk.doraneko.udpchat.simple.UdpServer;
+import tk.doraneko.tcp.chat.simple.TcpClient;
+import tk.doraneko.tcp.chat.simple.TcpServerMultiClient;
+import tk.doraneko.tcp.chat.simple.TcpServerReopenSingleClient;
+import tk.doraneko.tcp.chat.simple.TcpServerSingleClient;
+import tk.doraneko.udp.chat.simple.UdpClient;
+import tk.doraneko.udp.chat.simple.UdpServer;
 
 /**
  * Created by @tranphuquy19 on 23/08/2019

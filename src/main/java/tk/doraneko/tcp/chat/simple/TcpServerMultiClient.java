@@ -1,4 +1,4 @@
-package tk.doraneko.tcpchat.simple;
+package tk.doraneko.tcp.chat.simple;
 
 import java.io.BufferedReader;
 import java.io.IOException;
