@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component LANGUAGE_LEVEL="JDK_1_8" inheritJdk="true">
+	<exclude-output/>
+	<contentEntry url="file://$MODULE_DIR$/../../src/main"/>
+	<levels>
+		<level name="Gradle: mysql:mysql-connector-java:8.0.17" value="project"/>
+		<level name="Gradle: com.google.protobuf:protobuf-java:3.6.1" value="project"/>
+	</levels>
+</component>

@@ -20,9 +20,11 @@ public class Server implements Runnable {
     private ServerThread serverThread;
 
     private int port;
+    private String workingDir;
 
-    public Server(int port) throws IOException {
+    public Server(int port, String workingDir) throws IOException {
         this.port = port;
+        this.workingDir = workingDir;
         open();
         start();
     }
@@ -58,6 +60,9 @@ public class Server implements Runnable {
         serverThread.start();
     }
 
+    /**
+     * Thread nhận các file theo từng client
+     */
     private class ServerThread extends Thread {
         private Socket socket;
         private DataInputStream dataInputStream;
@@ -69,7 +74,6 @@ public class Server implements Runnable {
         }
 
         public void open() {
-
         }
 
         public void close(Socket socket) {
@@ -102,23 +106,27 @@ public class Server implements Runnable {
             }
         }
 
+        /**
+         * Lưu file vào hệ thống, mặc định đường dẫn là <b style="color: red"><i>"./res/files/<filePath>"</i></b>
+         * @param fileInfo
+         */
         private void createFile(FileInfo fileInfo) {
             BufferedOutputStream bufferedOutputStream = null;
             try {
-                File fileReceive = new File(FileInfo.getCureentWorkingDir() + fileInfo.getFileName());
+                File fileReceive = new File(Server.this.workingDir + "/res/files/" + fileInfo.getFileName());
 
                 bufferedOutputStream = new BufferedOutputStream(new FileOutputStream(fileReceive));
                 bufferedOutputStream.write(fileInfo.getData());
                 bufferedOutputStream.flush();
-            }catch (IOException e){
+            } catch (IOException e) {
                 e.printStackTrace();
-            }finally {
+            } finally {
                 close(bufferedOutputStream);
             }
         }
 
         public void run() {
-            while (true) {
+            while (!socket.isClosed()) {
                 try {
                     dataInputStream = new DataInputStream(socket.getInputStream());
                     System.out.println("Mess from client: " + dataInputStream.readUTF());
@@ -147,5 +155,10 @@ public class Server implements Runnable {
                 }
             }
         }
+    }
+
+    public static void main(String[] args) throws IOException{
+        final String workingDir = "/home/tranphuquy19/Documents/NetworkProgramming/";
+        new Server(16057, workingDir);
     }
 }

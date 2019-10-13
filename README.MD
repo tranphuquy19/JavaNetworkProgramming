@@ -8,4 +8,4 @@
     * **TCP Server Reopen Single Client** : Server chỉ có thể phục vụ 1 client, re-start sau khi client ngắt kết nối
     * **TCP Server Multi Client** : Server phục vụ nhiều client cùng 1 lúc, reponse mess:OK về client, có thể re-start sau khi client ngắt kết nối
 
-![demo](/img/demo1.gif "Optional Title")
+![demo](/res/img/demo1.gif "Optional Title")

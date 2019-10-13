@@ -18,17 +18,13 @@ public class Client {
      * @param serverIP IP của Server
      * @param serverPort Port của Server
      */
-    public Client(String serverIP, int serverPort) {
+    public Client(String serverIP, int serverPort) throws IOException{
         System.out.println("Establishing connection...");
-        try {
-            socket = new Socket(serverIP, serverPort);
-            System.out.println("You connect to the server successfully");
-            System.out.println("Connected: " + socket);
-            start();
-            listenServer();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        socket = new Socket(serverIP, serverPort);
+        System.out.println("You connect to the server successfully");
+        System.out.println("Connected: " + socket);
+        start();
+        listenServer();
         String line = "";
         while (!line.equals(".bye") && !line.equals(".stop")) {
             line = sc.nextLine();
@@ -80,7 +76,7 @@ public class Client {
         }
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         final String _serverIP = "0.0.0.0";
         final int _serverPort = 16057;
 
