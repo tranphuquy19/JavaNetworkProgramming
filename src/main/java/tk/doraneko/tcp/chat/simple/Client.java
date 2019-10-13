@@ -79,7 +79,7 @@ public class Client {
 
     /**
      *
-     * @param args Start client with: <b> args[] ={hostID, hostPort} or by default hostID="0.0.0.0" & hostPort=16057 </b>
+     * @param args Start client with: <b> args[] ={hostID, hostPort} or by default hostID="0.0.0.0" &amp; hostPort=16057 </b>
      * @throws IOException
      */
     public static void main(String[] args) throws IOException {
