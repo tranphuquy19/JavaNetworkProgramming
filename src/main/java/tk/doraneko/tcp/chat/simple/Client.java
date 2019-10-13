@@ -5,8 +5,8 @@ import java.net.Socket;
 import java.util.Scanner;
 
 /**
- * Created by @tranphuquy19 on 22/08/2019
- * Email:       tranphuquy19@gmail.com
+ * @author tranphuquy19@gmail.com
+ * @since 22/08/2019
  */
 public class Client {
     private Socket socket;

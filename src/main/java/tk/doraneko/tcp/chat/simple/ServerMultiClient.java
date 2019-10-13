@@ -8,31 +8,32 @@ import java.net.ServerSocket;
 import java.net.Socket;
 
 /**
- * Created by @tranphuquy19 on 22/08/2019
- * Email:       tranphuquy19@gmail.com
- */
-
-/**
  * Server multi thread đáp ứng nhiều client cùng 1 lúc
  * respone về client mess: OK
+ * @author tranphuquy19@gmail.com
+ * @since 22/08/2019
  */
 public class ServerMultiClient implements Runnable {
     private ServerSocket serverSocket;
     private Thread thread;
     private ServerThread serverThread;
 
-    public ServerMultiClient(int port) {
+    private int port;
+
+    public ServerMultiClient(int port) throws IOException{
+        this.port = port;
+
         System.out.println("Server type: " + getClass().getSimpleName());
         System.out.println("Server is starting in port: " + port);
-        try {
-            serverSocket = new ServerSocket(port);
-            System.out.println("Server is started!");
-            System.out.println("serverSocket = " + serverSocket);
-            System.out.println("Waiting for client...");
-            start();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        open();
+        start();
+    }
+
+    private void open() throws IOException{
+        serverSocket = new ServerSocket(port);
+        System.out.println("Server is started!");
+        System.out.println("serverSocket = " + serverSocket);
+        System.out.println("Waiting for client...");
     }
 
     private void start() {
@@ -60,23 +61,20 @@ public class ServerMultiClient implements Runnable {
         }
     }
 
-    private void addThread(Socket socket) {
+    private void addThread(Socket socket) throws IOException {
         System.out.println("Client accepted: ");
         System.out.println("socket = " + socket);
         serverThread = new ServerThread(this, socket);
-        try {
-            serverThread.open();
-            serverThread.start();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        serverThread.open();
+        serverThread.start();
     }
 
     /**
      * Main func
+     *
      * @param args
      */
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         final int port = 16057;
         if (args.length != 1) {
             System.out.println("Server start is default port: " + port);

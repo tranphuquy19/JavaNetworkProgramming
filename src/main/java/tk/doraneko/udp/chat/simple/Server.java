@@ -6,8 +6,8 @@ import java.net.DatagramSocket;
 import java.net.SocketException;
 
 /**
- * Created by @tranphuquy19 on 12/10/2019
- * Email:       tranphuquy19@gmail.com
+ * @author tranphuquy19@gmail.com
+ * @since 12/10/2019
  */
 public class Server {
     private DatagramSocket datagramSocket;
@@ -15,7 +15,7 @@ public class Server {
     private byte[] bufferIn = new byte[1024];
     private byte[] bufferOut = new byte[1024];
 
-    public Server(int port) throws SocketException, IOException {
+    public Server(int port) throws IOException {
         datagramSocket = new DatagramSocket(port);
         System.out.println("Server is running");
         start();

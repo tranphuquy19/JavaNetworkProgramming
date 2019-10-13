@@ -6,8 +6,8 @@ import java.io.InputStreamReader;
 import java.net.*;
 
 /**
- * Created by @tranphuquy19 on 12/10/2019
- * Email:       tranphuquy19@gmail.com
+ * @author tranphuquy19@gmail.com
+ * @since 12/10/2019
  */
 public class Client {
     private DatagramSocket datagramSocket;

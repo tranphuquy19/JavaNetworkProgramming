@@ -4,13 +4,11 @@ import tk.doraneko.commons.ConsoleColors;
 
 import java.sql.*;
 
-/**
- * Created by @tranphuquy19 on 13/10/2019
- * Email:       tranphuquy19@gmail.com
- */
 
 /**
  * Test kết nối đến Mysql
+ * @author tranphuquy19@gmail.com
+ * @since 13/10/2019
  */
 public class TestMysqlConnection {
     public static void main(String[] args) throws SQLException {

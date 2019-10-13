@@ -8,8 +8,8 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 
 /**
- * Created by @tranphuquy19 on 23/08/2019
- * Email:       tranphuquy19@gmail.com
+ * @author tranphuquy19@gmail.com
+ * @since 23/08/2019
  */
 public class Main {
 

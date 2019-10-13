@@ -22,6 +22,10 @@ public class FileInfo implements Serializable {
     private byte[] data;
     private String status;
 
+    public static String getCureentWorkingDir() {
+        return System.getProperty("user.dir");
+    }
+
     public static long getSerialVersionUid() {
         return SERIAL_VERSION_UID;
     }

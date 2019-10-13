@@ -5,12 +5,9 @@ import java.net.ServerSocket;
 import java.net.Socket;
 
 /**
- * Created by @tranphuquy19 on 22/08/2019
- * Email:       tranphuquy19@gmail.com
- */
-
-/**
  * Server accept single client
+ * @author tranphuquy19@gmail.com
+ * @since 22/08/2019
  */
 public class ServerSingleClient {
     private Socket socket;

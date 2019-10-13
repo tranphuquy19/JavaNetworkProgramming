@@ -9,8 +9,8 @@ import java.net.URISyntaxException;
 import java.net.URL;
 
 /**
- * Created by @tranphuquy19 on 24/08/2019
- * Email:       tranphuquy19@gmail.com
+ * @author tranphuquy19@gmail.com
+ * @since 24/08/2019
  */
 public class JavaProcess {
     public static int exec(Class klass) throws IOException,

@@ -1,10 +1,5 @@
 package tk.doraneko.tcp.chat.simple;
 
-/**
- * Created by @tranphuquy19 on 22/08/2019
- * Email:       tranphuquy19@gmail.com
- */
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -13,6 +8,8 @@ import java.net.Socket;
 
 /**
  * Server hoạt động trở lại khi client ngắt kết nối
+ * @author tranphuquy19@gmail.com
+ * @since 22/08/2019
  */
 public class ServerReopenSingleClient implements Runnable {
     private Socket socket;
