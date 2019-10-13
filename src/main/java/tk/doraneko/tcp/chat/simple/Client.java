@@ -8,7 +8,7 @@ import java.util.Scanner;
  * Created by @tranphuquy19 on 22/08/2019
  * Email:       tranphuquy19@gmail.com
  */
-public class TcpClient {
+public class Client {
     private Socket socket;
     private Scanner sc;
     private PrintWriter printWriter;
@@ -18,7 +18,7 @@ public class TcpClient {
      * @param serverIP IP của Server
      * @param serverPort Port của Server
      */
-    public TcpClient(String serverIP, int serverPort) {
+    public Client(String serverIP, int serverPort) {
         System.out.println("Establishing connection...");
         try {
             socket = new Socket(serverIP, serverPort);
@@ -86,11 +86,11 @@ public class TcpClient {
 
         if (args.length != 2) {
             System.err.println("Connect to server using DEFAULT_IP and DEFAULT_PORT");
-            new TcpClient(_serverIP, _serverPort);
+            new Client(_serverIP, _serverPort);
         } else {
             String serverIP = args[0];
             int serverPort = Integer.parseInt(args[1]);
-            new TcpClient(serverIP, serverPort);
+            new Client(serverIP, serverPort);
         }
     }
 }

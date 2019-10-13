@@ -9,13 +9,13 @@ import java.net.SocketException;
  * Created by @tranphuquy19 on 12/10/2019
  * Email:       tranphuquy19@gmail.com
  */
-public class UdpServer {
+public class Server {
     private DatagramSocket datagramSocket;
 
     private byte[] bufferIn = new byte[1024];
     private byte[] bufferOut = new byte[1024];
 
-    public UdpServer(int port) throws SocketException, IOException {
+    public Server(int port) throws SocketException, IOException {
         datagramSocket = new DatagramSocket(port);
         System.out.println("Server is running");
         start();
@@ -38,6 +38,6 @@ public class UdpServer {
     }
 
     public static void main(String[] args) throws IOException {
-        new UdpServer(16057);
+        new Server(16057);
     }
 }

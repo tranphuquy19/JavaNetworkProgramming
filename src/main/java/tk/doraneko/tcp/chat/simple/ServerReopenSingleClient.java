@@ -14,13 +14,13 @@ import java.net.Socket;
 /**
  * Server hoạt động trở lại khi client ngắt kết nối
  */
-public class TcpServerReopenSingleClient implements Runnable {
+public class ServerReopenSingleClient implements Runnable {
     private Socket socket;
     private ServerSocket serverSocket;
     private Thread thread;
     private BufferedReader bufferedReader;
 
-    public TcpServerReopenSingleClient(int port) {
+    public ServerReopenSingleClient(int port) {
         System.out.println("Server type: " + getClass().getSimpleName());
         System.out.println("Server is starting in port: " + port);
 
@@ -88,12 +88,12 @@ public class TcpServerReopenSingleClient implements Runnable {
 
     public static void main(String[] args) {
         final int port = 16057;
-        TcpServerReopenSingleClient server;
+        ServerReopenSingleClient server;
         if(args.length != 1){
-            server = new TcpServerReopenSingleClient(port);
+            server = new ServerReopenSingleClient(port);
         }else{
             int newPort = Integer.parseInt(args[0]);
-            server = new TcpServerReopenSingleClient(newPort);
+            server = new ServerReopenSingleClient(newPort);
         }
     }
 }

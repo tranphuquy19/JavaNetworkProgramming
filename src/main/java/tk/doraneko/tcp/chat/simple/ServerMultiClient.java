@@ -16,12 +16,12 @@ import java.net.Socket;
  * Server multi thread đáp ứng nhiều client cùng 1 lúc
  * respone về client mess: OK
  */
-public class TcpServerMultiClient implements Runnable {
+public class ServerMultiClient implements Runnable {
     private ServerSocket serverSocket;
     private Thread thread;
     private ServerThread serverThread;
 
-    public TcpServerMultiClient(int port) {
+    public ServerMultiClient(int port) {
         System.out.println("Server type: " + getClass().getSimpleName());
         System.out.println("Server is starting in port: " + port);
         try {
@@ -76,22 +76,22 @@ public class TcpServerMultiClient implements Runnable {
         final int port = 16057;
         if (args.length != 1) {
             System.out.println("Server start is default port: " + port);
-            new TcpServerMultiClient(port);
+            new ServerMultiClient(port);
         } else {
             int newPort = Integer.parseInt(args[0]);
             System.out.println("Server start in new port: " + newPort);
-            new TcpServerMultiClient(newPort);
+            new ServerMultiClient(newPort);
         }
     }
 
     private class ServerThread extends Thread {
         private Socket socket;
-        private TcpServerMultiClient serverMultiClient;
+        private ServerMultiClient serverMultiClient;
         private BufferedReader bufferedReader;
         private int endPointPort = -1;
         private PrintWriter printWriter;
 
-        public ServerThread(TcpServerMultiClient server, Socket socket) {
+        public ServerThread(ServerMultiClient server, Socket socket) {
             this.serverMultiClient = server;
             this.socket = socket;
             this.endPointPort = socket.getPort();

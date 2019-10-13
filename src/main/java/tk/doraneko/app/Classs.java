@@ -1,11 +1,10 @@
 package tk.doraneko.app;
 
-import tk.doraneko.tcp.chat.simple.TcpClient;
-import tk.doraneko.tcp.chat.simple.TcpServerMultiClient;
-import tk.doraneko.tcp.chat.simple.TcpServerReopenSingleClient;
-import tk.doraneko.tcp.chat.simple.TcpServerSingleClient;
-import tk.doraneko.udp.chat.simple.UdpClient;
-import tk.doraneko.udp.chat.simple.UdpServer;
+import tk.doraneko.tcp.chat.simple.ServerMultiClient;
+import tk.doraneko.tcp.chat.simple.ServerReopenSingleClient;
+import tk.doraneko.tcp.chat.simple.ServerSingleClient;
+import tk.doraneko.udp.chat.simple.Client;
+import tk.doraneko.udp.chat.simple.Server;
 
 /**
  * Created by @tranphuquy19 on 23/08/2019
@@ -13,13 +12,13 @@ import tk.doraneko.udp.chat.simple.UdpServer;
  */
 public enum Classs {
 
-    TCP_SERVER_SINGLE_CLIENT(1, TcpServerSingleClient.class),
-    TCP_SERVER_REOPEN_SINGLE_CLIENT(2, TcpServerReopenSingleClient.class),
-    TCP_SERVER_MULTI_CLIENT(3, TcpServerMultiClient.class),
-    TCP_CLIENT(4, TcpClient.class),
+    TCP_SERVER_SINGLE_CLIENT(1, ServerSingleClient.class),
+    TCP_SERVER_REOPEN_SINGLE_CLIENT(2, ServerReopenSingleClient.class),
+    TCP_SERVER_MULTI_CLIENT(3, ServerMultiClient.class),
+    TCP_CLIENT(4, tk.doraneko.tcp.chat.simple.Client.class),
 
-    UDP_SERVER_SINGLE_CLIENT(5, UdpServer.class),
-    UDP_CLIENT(6, UdpClient.class);
+    UDP_SERVER_SINGLE_CLIENT(5, Server.class),
+    UDP_CLIENT(6, Client.class);
 
     private final String URL_GIT_REMOTE_BASE = "https://github.com/tranphuquy19/JavaNetworkProgramming/blob/master/src/main/java/";
 
@@ -46,6 +45,10 @@ public enum Classs {
     public String getGitCode() {
         String url = URL_GIT_REMOTE_BASE + classEntity.getPackage().getName().replace(".", "/") + "/" + getClassName() + ".java";
         return url;
+    }
+
+    public String getClassPackage(){
+        return classEntity.getName();
     }
 
     public Class getClassEntity() {

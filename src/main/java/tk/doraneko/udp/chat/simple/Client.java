@@ -9,7 +9,7 @@ import java.net.*;
  * Created by @tranphuquy19 on 12/10/2019
  * Email:       tranphuquy19@gmail.com
  */
-public class UdpClient {
+public class Client {
     private DatagramSocket datagramSocket;
     private InetAddress serverAddress;
 
@@ -22,7 +22,7 @@ public class UdpClient {
     private byte[] bufferIn = new byte[1024];
     private byte[] bufferOut = new byte[1024];
 
-    public UdpClient(String host, int port) throws IOException {
+    public Client(String host, int port) throws IOException {
         this.host = host;
         this.port = port;
 
@@ -53,7 +53,7 @@ public class UdpClient {
     }
 
     public static void main(String[] args) throws IOException {
-        new UdpClient("localhost", 16057);
+        new Client("localhost", 16057);
     }
 
 }

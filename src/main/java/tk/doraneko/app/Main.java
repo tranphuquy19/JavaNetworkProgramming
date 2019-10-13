@@ -15,7 +15,7 @@ public class Main {
 
     private static void getClasss() {
         for (Classs c : Classs.values()) {
-            System.out.println(ConsoleColors.YELLOW_BRIGHT + "[" + c.getIndex() + "] " + c.getClassName() + ConsoleColors.RESET);
+            System.out.println(ConsoleColors.YELLOW_BRIGHT + "[" + c.getIndex() + "] " + c.getClassName() + ConsoleColors.RESET + ConsoleColors.PURPLE_BOLD + "\t#" + c.getClassPackage() + ConsoleColors.RESET);
         }
     }
 
