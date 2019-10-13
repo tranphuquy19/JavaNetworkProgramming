@@ -45,7 +45,7 @@ public class Main {
                 }
             } else {
                 try {
-                    int status = JavaProcess.exec(Classs.findByIndex(options).getClassEntity());
+                    JavaProcess.exec(Classs.findByIndex(options).getClassEntity());
                 } catch (IOException e) {
                     e.printStackTrace();
                 } catch (InterruptedException e) {

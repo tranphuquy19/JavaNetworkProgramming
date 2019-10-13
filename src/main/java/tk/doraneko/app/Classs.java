@@ -25,11 +25,20 @@ public enum Classs {
     private int index;
     private Class classEntity;
 
+    /**
+     *
+     * @param index vị trí đánh số trên console
+     * @param classEntity Thực thể Class được truyền vào
+     */
     Classs(int index, Class classEntity) {
         this.index = index;
         this.classEntity = classEntity;
     }
 
+    /**
+     * lấy thứ tự classes
+     * @return thứ tự của class trong enum Classes
+     */
     public int getIndex() {
         return index;
     }

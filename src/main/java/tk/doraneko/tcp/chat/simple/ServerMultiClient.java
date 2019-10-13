@@ -72,6 +72,10 @@ public class ServerMultiClient implements Runnable {
         }
     }
 
+    /**
+     * Main func
+     * @param args
+     */
     public static void main(String[] args) {
         final int port = 16057;
         if (args.length != 1) {
@@ -84,6 +88,9 @@ public class ServerMultiClient implements Runnable {
         }
     }
 
+    /**
+     * Class sinh các threads phục vụ từng client
+     */
     private class ServerThread extends Thread {
         private Socket socket;
         private ServerMultiClient serverMultiClient;
