@@ -13,7 +13,7 @@ import java.util.Scanner;
  */
 public class Main {
 
-    private static void getClasss() {
+    private static void getClasses() {
         for (Classs c : Classs.values()) {
             System.out.println(ConsoleColors.YELLOW_BRIGHT + "[" + c.getIndex() + "] " + c.getClassName() + ConsoleColors.RESET + ConsoleColors.PURPLE_BOLD + "\t#" + c.getClassPackage() + ConsoleColors.RESET);
         }
@@ -27,7 +27,7 @@ public class Main {
             System.out.println(ConsoleColors.YELLOW + "If you find bugs. Congratulations, that's new feature @tranphuquy19" + ConsoleColors.RESET);
             System.out.println(ConsoleColors.GREEN + " Cac bai lap trong mon lap trinh mang" + ConsoleColors.RESET);
             System.out.println(ConsoleColors.GREEN + "Enter so am (-) de show code, Ctrl+C de stop chuong trinh" + ConsoleColors.RESET);
-            getClasss();
+            getClasses();
             System.out.print(ConsoleColors.RED_BOLD + "Enter: " + ConsoleColors.RESET);
 
             try {

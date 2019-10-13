@@ -8,6 +8,10 @@ import java.sql.*;
  * Created by @tranphuquy19 on 13/10/2019
  * Email:       tranphuquy19@gmail.com
  */
+
+/**
+ * Test kết nối đến Mysql
+ */
 public class TestMysqlConnection {
     public static void main(String[] args) throws SQLException {
         Connection connection;
