@@ -1,6 +1,11 @@
 package tk.doraneko.commons;
 
 /**
+ * <h1>In màu trên terminal của các ứng dụng console</h1>
+ * Cú pháp: <br/>
+ * {@code System.out.println(ConsoleColors.RED + "Welcome Java Network Programing Project" + ConsoleColors.RESET);}
+ * <p>Kết quả:</p>
+ * <p style="color: red">Welcome Java Network Programing Project</p>
  * @author tranphuquy19@gmail.com
  * @since 23/08/2019
  */

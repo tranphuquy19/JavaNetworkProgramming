@@ -3,12 +3,9 @@ package tk.doraneko.commons;
 import java.io.Serializable;
 
 /**
- * Created by @tranphuquy19 on 13/10/2019
- * Email:       tranphuquy19@gmail.com
- */
-
-/**
  * Thông tin file cần gửi
+ * @author tranphuquy19@gmail.com
+ * @since 13/10/2019
  */
 public class FileInfo implements Serializable {
     private static final long SERIAL_VERSION_UID = 1L;

@@ -72,7 +72,7 @@ public class ServerMultiClient implements Runnable {
     /**
      * Main func
      *
-     * @param args
+     * @param args Start Server with serverPort = <b>args[0]</b> or by default serverPort = <b>16057</b>
      */
     public static void main(String[] args) throws IOException {
         final int port = 16057;

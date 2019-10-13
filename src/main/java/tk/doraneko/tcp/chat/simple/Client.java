@@ -5,6 +5,7 @@ import java.net.Socket;
 import java.util.Scanner;
 
 /**
+ * Client gửi nhận strings đến TCP Server
  * @author tranphuquy19@gmail.com
  * @since 22/08/2019
  */
@@ -76,6 +77,11 @@ public class Client {
         }
     }
 
+    /**
+     *
+     * @param args Start client with: <b> args[] ={hostID, hostPort} or by default hostID="0.0.0.0" & hostPort=16057 </b>
+     * @throws IOException
+     */
     public static void main(String[] args) throws IOException {
         final String _serverIP = "0.0.0.0";
         final int _serverPort = 16057;
