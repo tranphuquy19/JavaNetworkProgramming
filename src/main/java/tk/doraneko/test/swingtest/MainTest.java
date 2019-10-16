@@ -7,7 +7,7 @@ package tk.doraneko.test.swingtest;
 public class MainTest {
     public static void main(String[] args) {
         SqlHelper sqlHelper = new SqlHelper();
-        sqlHelper.getTiles("select * from user_tb");
-        sqlHelper.getRows("select * from user_tb");
+        sqlHelper.getTiles();
+        sqlHelper.getRows();
     }
 }

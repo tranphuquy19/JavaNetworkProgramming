@@ -1,0 +1,10 @@
+<component name="ArtifactManager">
+  <artifact type="jar" build-on-make="true" name="lap.network.programming:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/lap_network_programming_jar</output-path>
+    <root id="archive" name="lap.network.programming.jar">
+      <element id="directory" name="META-INF">
+        <element id="file-copy" path="$PROJECT_DIR$/META-INF/MANIFEST.MF" />
+      </element>
+    </root>
+  </artifact>
+</component>

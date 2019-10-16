@@ -1,5 +1,7 @@
 package tk.doraneko.test.swingtest;
 
+import tk.doraneko.test.threelayerpattern.Default;
+
 import java.awt.*;
 
 import javax.swing.*;
@@ -7,7 +9,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import java.io.ObjectInputStream;
+import java.awt.event.KeyListener;
 
 /*
  * @author tranphuquy19@gmail.com
@@ -18,8 +20,8 @@ public class DbPrograming extends JFrame {
     private static final long serialVersionUID = 1L;
     private JPanel contentPane;
     private JTable table;
-    private JTextField textField;
-    private JTextField textField_1;
+    private JTextField txtConnectionString;
+    private JTextField txtSqlCommand;
 
     /**
      * Launch the application.
@@ -64,31 +66,37 @@ public class DbPrograming extends JFrame {
         lblSearch.setBounds(10, 73, 167, 14);
         contentPane.add(lblSearch);
 
+        table = new JTable();
+        table.setBounds(10, 107, 483, 164);
+        contentPane.add(table);
 
-        textField = new JTextField();
-        textField.setBounds(195, 45, 234, 20);
-        contentPane.add(textField);
-        textField.setColumns(10);
+        txtConnectionString = new JTextField();
+        txtConnectionString.setBounds(195, 45, 234, 20);
+        contentPane.add(txtConnectionString);
+        txtConnectionString.setColumns(10);
 
-        textField_1 = new JTextField();
-        textField_1.setBounds(195, 71, 234, 20);
-        contentPane.add(textField_1);
-        textField_1.setColumns(10);
+        txtSqlCommand = new JTextField();
+        txtSqlCommand.setBounds(195, 71, 234, 20);
+        contentPane.add(txtSqlCommand);
+        txtSqlCommand.setColumns(10);
 
         JButton btnSubmit = new JButton("SUBMIT");
         btnSubmit.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent arg0) {
-                table = new JTable();
-                table.setBounds(10, 107, 483, 164);
-
                 SqlHelper sqlHelper = new SqlHelper();
-                Object[] titles = sqlHelper.getTiles("select * from user_tb");
-                Object[][] rows = sqlHelper.getRows("select * from user_tb");
+
+                String connectionString = txtConnectionString.getText();
+                String sql = txtSqlCommand.getText();
+
+                if (sql.isEmpty() || connectionString.isEmpty()) return;
+                sqlHelper.setConnectionString(connectionString);
+                sqlHelper.setSql(sql);
+
+                Object[] titles = sqlHelper.getTiles();
+                Object[][] rows = sqlHelper.getRows();
                 DefaultTableModel dt = new DefaultTableModel(rows, titles);
                 table.setModel(dt);
-                table.setFillsViewportHeight(true);
-                rootPane.add(new JScrollPane(table));
-                rootPane.add(table);
+
                 table.updateUI();
             }
         });
@@ -98,6 +106,12 @@ public class DbPrograming extends JFrame {
         JButton btnReset = new JButton("RESET");
         btnReset.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent arg0) {
+                txtConnectionString.setText("");
+                txtSqlCommand.setText("");
+                DefaultTableModel defaultTableModel = (DefaultTableModel) table.getModel();
+                defaultTableModel.setRowCount(0);
+                table.setModel(defaultTableModel);
+                table.updateUI();
             }
         });
         btnReset.setBounds(195, 292, 89, 23);
@@ -106,6 +120,7 @@ public class DbPrograming extends JFrame {
         JButton btnExit = new JButton("EXIT");
         btnExit.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent arg0) {
+                System.exit(0);
             }
         });
         btnExit.setBounds(315, 291, 89, 23);

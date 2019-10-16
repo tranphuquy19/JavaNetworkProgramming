@@ -21,9 +21,9 @@ public class SqlHelper {
     private String password = "root@123";
 
     private int columnCount;
+    private String sql;
 
     public SqlHelper() {
-        openConnection();
     }
 
     public SqlHelper(String connectionString) {
@@ -42,7 +42,16 @@ public class SqlHelper {
         }
     }
 
-    public String[] getTiles(String sql) {
+    public void setSql(String sql) {
+        this.sql = sql;
+        openConnection();
+    }
+
+    public void setConnectionString(String connectionString) {
+        this.connectionString = connectionString;
+    }
+
+    public String[] getTiles() {
         String[] titles = null;
         try {
             resultSet = statement.executeQuery(sql);
@@ -55,11 +64,10 @@ public class SqlHelper {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        System.out.println(titles.toString());
         return titles;
     }
 
-    public Object[][] getRows(String sql) {
+    public Object[][] getRows() {
         ArrayList<Object[]> rowResult = new ArrayList<>();
         try {
             resultSet = statement.executeQuery(sql);
@@ -78,7 +86,6 @@ public class SqlHelper {
         for (int i = 0; i < rowResult.size(); i++) {
             Object[] row = rowResult.get(i);
             rows[i] = row;
-            System.out.println(row);
         }
         return rows;
     }
