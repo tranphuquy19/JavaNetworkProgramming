@@ -52,11 +52,11 @@ public class Server implements Runnable {
         }
     }
 
-    private void addThread(Socket socket) {
-        System.out.println("Client accepted");
+    private void addThread(Socket socket) throws IOException{
+        System.out.println("Client is accepted");
         System.out.println("Socket:" + socket);
         serverThread = new ServerThread(socket);
-        //serverThread.open();
+        serverThread.open();
         serverThread.start();
     }
 
@@ -73,7 +73,10 @@ public class Server implements Runnable {
             this.socket = socket;
         }
 
-        public void open() {
+        public void open() throws IOException {
+            dataInputStream = new DataInputStream(socket.getInputStream());
+            objectInputStream = new ObjectInputStream(socket.getInputStream());
+            objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
         }
 
         public void close(Socket socket) {
@@ -108,6 +111,7 @@ public class Server implements Runnable {
 
         /**
          * Lưu file vào hệ thống, mặc định đường dẫn là <b style="color: red"><i>"./res/files/<filePath>"</i></b>
+         *
          * @param fileInfo
          */
         private void createFile(FileInfo fileInfo) {
@@ -128,18 +132,15 @@ public class Server implements Runnable {
         public void run() {
             while (!socket.isClosed()) {
                 try {
-                    dataInputStream = new DataInputStream(socket.getInputStream());
                     System.out.println("Mess from client: " + dataInputStream.readUTF());
 
                     // receive file info
-                    objectInputStream = new ObjectInputStream(socket.getInputStream());
                     FileInfo fileInfo = (FileInfo) objectInputStream.readObject();
 
                     if (fileInfo != null) {
                         createFile(fileInfo);
                     }
 
-                    objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
                     fileInfo.setStatus("success");
                     objectOutputStream.writeObject(fileInfo);
 
@@ -157,7 +158,7 @@ public class Server implements Runnable {
         }
     }
 
-    public static void main(String[] args) throws IOException{
+    public static void main(String[] args) throws IOException {
         final String workingDir = "/home/tranphuquy19/Documents/NetworkProgramming/";
         new Server(16057, workingDir);
     }
