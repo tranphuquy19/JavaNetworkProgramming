@@ -8,7 +8,7 @@ import java.io.Serializable;
  * @since 13/10/2019
  */
 public class FileInfo implements Serializable {
-    private static final long serialVersionUID = 1L;
+    private static final long SERIAL_VERSION_UID = 1L;
 
     private String destinationDirectory;
     private String sourceDirectory;
