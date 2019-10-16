@@ -11,7 +11,7 @@ import java.sql.*;
  * @since 13/10/2019
  */
 public class TestMysqlConnection {
-    public static void main(String[] args) throws SQLException {
+    public static void main(String[] args) throws SQLException, ClassNotFoundException {
         Connection connection;
         Statement statement;
         ResultSet resultSet;

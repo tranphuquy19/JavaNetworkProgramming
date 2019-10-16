@@ -8,4 +8,8 @@ import javax.swing.*;
  */
 public class DbQuery {
     private JPanel mainPanel;
+
+    public static void main(String[] args) {
+
+    }
 }
