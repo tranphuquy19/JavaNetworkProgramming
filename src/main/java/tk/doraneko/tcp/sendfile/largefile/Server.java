@@ -131,6 +131,6 @@ public class Server implements Runnable {
      * @throws IOException
      */
     public static void main(String[] args) throws IOException {
-        new Server(16057, "/home/tranphuquy19/Documents/NetworkProgramming");
+        new Server(16057, "/home/tranphuquy19/Documents/JavaNetworkProgramming");
     }
 }
