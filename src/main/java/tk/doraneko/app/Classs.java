@@ -18,7 +18,12 @@ public enum Classs {
     TCP_CLIENT(4, tk.doraneko.tcp.chat.simple.Client.class),
 
     UDP_SERVER_SINGLE_CLIENT(5, Server.class),
-    UDP_CLIENT(6, Client.class);
+    UDP_CLIENT(6, Client.class),
+
+    TCP_SERVER_SEND_FILE_SIMPLE(7, tk.doraneko.tcp.sendfile.simple.Server.class),
+    TCP_CLIENT_SEND_FILE_SIMPLE(8, tk.doraneko.tcp.sendfile.simple.Client.class),
+    TCP_SERVER_SEND_LARGE_FILE(9, tk.doraneko.tcp.sendfile.largefile.Server.class),
+    TCP_CLIENT_SEND_LARGE_FILE(10, tk.doraneko.tcp.sendfile.largefile.Client.class);
 
     private final String URL_GIT_REMOTE_BASE = "https://github.com/tranphuquy19/JavaNetworkProgramming/blob/master/src/main/java/";
 

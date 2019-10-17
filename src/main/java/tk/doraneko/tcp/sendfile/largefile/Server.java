@@ -124,6 +124,11 @@ public class Server implements Runnable {
 
     }
 
+    /**
+     * Mặc định nơi lưu file là workingDir + "/res/files/"
+     * @param args
+     * @throws IOException
+     */
     public static void main(String[] args) throws IOException {
         new Server(16057, "/home/tranphuquy19/Documents/NetworkProgramming");
     }
