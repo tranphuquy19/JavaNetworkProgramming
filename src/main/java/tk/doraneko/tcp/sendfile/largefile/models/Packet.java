@@ -34,50 +34,50 @@ public class Packet {
         byte[] data_length = String.valueOf(data.length).getBytes("UTF8");
         byte[] packet = new byte[initialize.length + separator.length + cmd.length + data_length.length + separator.length + data.length];
 
-        int packet_offset = 0;
+        int packetOffset = 0;
 
         //Append init to the packet
-        System.arraycopy(initialize, 0, packet, packet_offset, initialize.length);
-        packet_offset += initialize.length;
+        System.arraycopy(initialize, 0, packet, packetOffset, initialize.length);
+        packetOffset += initialize.length;
 
         //Append a separator
-        System.arraycopy(separator, 0, packet, packet_offset, separator.length);
-        packet_offset += separator.length;
+        System.arraycopy(separator, 0, packet, packetOffset, separator.length);
+        packetOffset += separator.length;
 
         //Append a command
-        System.arraycopy(cmd, 0, packet, packet_offset, cmd.length);
-        packet_offset += cmd.length;
+        System.arraycopy(cmd, 0, packet, packetOffset, cmd.length);
+        packetOffset += cmd.length;
 
         //Append length of data
-        System.arraycopy(data_length, 0, packet, packet_offset, data_length.length);
-        packet_offset += data_length.length;
+        System.arraycopy(data_length, 0, packet, packetOffset, data_length.length);
+        packetOffset += data_length.length;
 
         //Append a separator
-        System.arraycopy(separator, 0, packet, packet_offset, separator.length);
-        packet_offset += separator.length;
+        System.arraycopy(separator, 0, packet, packetOffset, separator.length);
+        packetOffset += separator.length;
 
         //Append data
-        System.arraycopy(data, 0, packet, packet_offset, data.length);
+        System.arraycopy(data, 0, packet, packetOffset, data.length);
 
         return packet;
     }
 
     public static byte[] readStream(DataInputStream dataInputStream) throws IOException, NullPointerException {
-        byte[] data_buff = null;
+        byte[] dataBuff = null;
         int b = 0;
-        String buff_length = "";
+        String buffLength = "";
         while ((b = dataInputStream.readByte()) != SEPARATOR) {
-            buff_length += (char) b;
+            buffLength += (char) b;
         }
-        int data_length = Integer.parseInt(buff_length);
-        if (data_length == 0) {
+        int dataLength = Integer.parseInt(buffLength);
+        if (dataLength == 0) {
             throw new NullPointerException();
         }
 
-        data_buff = new byte[Integer.parseInt(buff_length)];
-        int byte_read = 0;
-        int byte_offset = 0;
-        while (byte_offset < data_length) {
+        dataBuff = new byte[Integer.parseInt(buffLength)];
+        int byteRead = 0;
+        int byteOffset = 0;
+        while (byteOffset < dataLength) {
             /**
              * dataInputStream.read() return về tổng số bytes trong luồng, và -1 nếu gập kí tự kết thúc (has reached the end)
              * dataInputStream.read(byte b[], int offset, int length)
@@ -85,9 +85,9 @@ public class Packet {
              *      <b>offset</b> - phần bù tính từ vị trí 0 của b
              *      <b>length</b> - số bytes tối đa cho việc đọc
              */
-            byte_read = dataInputStream.read(data_buff, byte_offset, data_length - byte_offset);
-            byte_offset += byte_read;
+            byteRead = dataInputStream.read(dataBuff, byteOffset, dataLength - byteOffset);
+            byteOffset += byteRead;
         } //end while
-        return data_buff;
+        return dataBuff;
     }
 }

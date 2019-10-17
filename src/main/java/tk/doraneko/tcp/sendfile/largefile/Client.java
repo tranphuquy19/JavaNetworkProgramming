@@ -41,40 +41,39 @@ public class Client {
         RandomAccessFile randomAccessFile = new RandomAccessFile(sourceFile, "r");
 
         dataOutputStream.write(Packet.createDataPacket(Packet.COMMAND_SEND_FILE_LENGTH, String.valueOf(randomAccessFile.length()).getBytes("UTF8")));
-        long current_file_pointer;
-        boolean loop_break = false;
+        long currentFilePointer;
+        boolean loopBreak = false;
 
         while (!socket.isClosed()) {
             if (dataInputStream.readByte() == Packet.INITIALIZE) {
-                int b = 0;
                 dataInputStream.readByte(); // tiêu thụ SEPARATOR
-                byte[] cmd_buff = new byte[3];
-                dataInputStream.read(cmd_buff, 0, cmd_buff.length);
+                byte[] cmdBuff = new byte[3];
+                dataInputStream.read(cmdBuff, 0, cmdBuff.length);
 
-                byte[] recv_buff = Packet.readStream(dataInputStream);
+                byte[] recvBuff = Packet.readStream(dataInputStream);
 
-                switch (new String(cmd_buff)) {
+                switch (new String(cmdBuff)) {
                     case Packet.COMMAND_REQUEST_SEND_FILE_DATA:
-                        current_file_pointer = Long.valueOf(new String(recv_buff));
-                        long residual_len = randomAccessFile.length() - current_file_pointer; //phần dư ra sau khi cắt file
-                        int buff_len = (int) (residual_len < MAX_LENGTH_SEND ? residual_len : MAX_LENGTH_SEND); // tính toán phần data phải gửi
-                        byte[] temp_buff = new byte[buff_len];
-                        if (current_file_pointer != randomAccessFile.length()) { // == nếu con tro file nằm cuối file
-                            randomAccessFile.seek(current_file_pointer);
-                            randomAccessFile.read(temp_buff, 0, temp_buff.length); // fill vào mảng
+                        currentFilePointer = Long.valueOf(new String(recvBuff));
+                        long residualLen = randomAccessFile.length() - currentFilePointer; //phần dư ra sau khi cắt file
+                        int buffLen = (int) (residualLen < MAX_LENGTH_SEND ? residualLen : MAX_LENGTH_SEND); // tính toán phần data phải gửi
+                        byte[] tempBuff = new byte[buffLen];
+                        if (currentFilePointer != randomAccessFile.length()) { // == nếu con tro file nằm cuối file
+                            randomAccessFile.seek(currentFilePointer);
+                            randomAccessFile.read(tempBuff, 0, tempBuff.length); // fill vào mảng
 
-                            dataOutputStream.write(Packet.createDataPacket(Packet.COMMAND_SEND_FILE_DATA, temp_buff));
+                            dataOutputStream.write(Packet.createDataPacket(Packet.COMMAND_SEND_FILE_DATA, tempBuff));
                             dataOutputStream.flush();
 
-                            float percent = ((float) (current_file_pointer + temp_buff.length) / randomAccessFile.length()) * 100;
+                            float percent = ((float) (currentFilePointer + tempBuff.length) / randomAccessFile.length()) * 100;
                             System.out.println("Upload percentage: " + percent + "%");
                         } else {
-                            loop_break = true;
+                            loopBreak = true;
                         }
                         break;
                 }// end switch
             }
-            if (loop_break == true) {
+            if (loopBreak == true) {
                 dataOutputStream.write(Packet.createDataPacket(Packet.COMMAND_SEND_FINISH, "Close".getBytes("UTF8")));
                 dataOutputStream.flush();
                 randomAccessFile.close();

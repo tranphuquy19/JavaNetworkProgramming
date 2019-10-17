@@ -73,46 +73,46 @@ public class Server implements Runnable {
         public void run() {
             System.out.println("Listening client");
             RandomAccessFile randomAccessFile = null;
-            long current_file_pointer = 0;
+            long currentFilePointer = 0;
             String fileName = "";
             long fileLength = 1;
-            boolean loop_break = false;
+            boolean loopBreak = false;
 
             while (!socket.isClosed()) {
                 try {
                     if (dataInputStream.readByte() == Packet.INITIALIZE) {
                         int b = 0;
                         dataInputStream.readByte(); // tieu thu SEPARATOR
-                        byte[] cmd_buff = new byte[3];
-                        dataInputStream.read(cmd_buff, 0, cmd_buff.length);
-                        byte[] recv_data = Packet.readStream(dataInputStream);
-                        switch (new String(cmd_buff)) {
+                        byte[] cmdBuff = new byte[3];
+                        dataInputStream.read(cmdBuff, 0, cmdBuff.length);
+                        byte[] recvData = Packet.readStream(dataInputStream);
+                        switch (new String(cmdBuff)) {
                             case Packet.COMMAND_SEND_FILE_NAME:
-                                fileName = new String(recv_data);
+                                fileName = new String(recvData);
                                 randomAccessFile = new RandomAccessFile(workingDir + "/res/files/" + fileName, "rw");
-                                dataOutputStream.write(Packet.createDataPacket(Packet.COMMAND_REQUEST_SEND_FILE_DATA, String.valueOf(current_file_pointer).getBytes("UTF8")));
+                                dataOutputStream.write(Packet.createDataPacket(Packet.COMMAND_REQUEST_SEND_FILE_DATA, String.valueOf(currentFilePointer).getBytes("UTF8")));
                                 dataOutputStream.flush();
                                 break;
                             case Packet.COMMAND_SEND_FILE_LENGTH:
-                                fileLength = Long.parseLong(new String(recv_data));
+                                fileLength = Long.parseLong(new String(recvData));
                                 break;
                             case Packet.COMMAND_SEND_FILE_DATA:
-                                randomAccessFile.seek(current_file_pointer);
-                                randomAccessFile.write(recv_data);
-                                current_file_pointer = randomAccessFile.getFilePointer();
-                                float percent = (float) (current_file_pointer / fileLength) * 100;
+                                randomAccessFile.seek(currentFilePointer);
+                                randomAccessFile.write(recvData);
+                                currentFilePointer = randomAccessFile.getFilePointer();
+                                float percent = (float) (currentFilePointer / fileLength) * 100;
                                 System.out.println("Download percentage: " + percent);
-                                dataOutputStream.write(Packet.createDataPacket(Packet.COMMAND_REQUEST_SEND_FILE_DATA, String.valueOf(current_file_pointer).getBytes("UTF8")));
+                                dataOutputStream.write(Packet.createDataPacket(Packet.COMMAND_REQUEST_SEND_FILE_DATA, String.valueOf(currentFilePointer).getBytes("UTF8")));
                                 dataOutputStream.flush();
                                 break;
                             case Packet.COMMAND_SEND_FINISH:
-                                if ("Close".equals(new String(recv_data))) {
-                                    loop_break = true;
+                                if ("Close".equals(new String(recvData))) {
+                                    loopBreak = true;
                                 }
                                 break;
                         }
                     }
-                    if (loop_break) {
+                    if (loopBreak) {
                         randomAccessFile.close();
                         socket.close();
                     }
