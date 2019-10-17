@@ -1,9 +1,13 @@
 package tk.doraneko.tcp.sendfile.largefile;
 
+import tk.doraneko.commons.ConsoleColors;
 import tk.doraneko.tcp.sendfile.largefile.models.Packet;
 
+import javax.swing.*;
+import javax.swing.filechooser.FileSystemView;
 import java.io.*;
 import java.net.Socket;
+import java.util.Scanner;
 
 /**
  * @author tranphuquy19@gmail.com
@@ -84,9 +88,26 @@ public class Client {
     }
 
     public static void main(String[] args) throws IOException {
-        Client client = new Client("0.0.0.0", 16057);
+        Client client;
+        Scanner sc = new Scanner(System.in);
         if (!args[0].isEmpty()) {
-            client.sendFile(args[0]);
+            String temp = args[0];
+            if ("true".equals(temp)) {
+                while (true) {
+                    client = new Client("0.0.0.0", 16057);
+                    JFileChooser jFileChooser = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
+                    int returnValue = jFileChooser.showOpenDialog(null);
+                    if (returnValue == JFileChooser.APPROVE_OPTION) {
+                        File selectedFile = jFileChooser.getSelectedFile();
+                        client.sendFile(selectedFile.getAbsolutePath());
+                    }
+                    System.out.println(ConsoleColors.GREEN_BOLD + "Enter if you want send more or Ctrl+C" + ConsoleColors.RESET);
+                    sc.nextLine();
+                }
+            } else {
+                client = new Client("0.0.0.0", 16057);
+                client.sendFile(temp);
+            }
         }
     }
 }

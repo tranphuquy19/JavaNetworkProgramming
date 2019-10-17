@@ -100,8 +100,8 @@ public class Server implements Runnable {
                                 randomAccessFile.seek(currentFilePointer);
                                 randomAccessFile.write(recvData);
                                 currentFilePointer = randomAccessFile.getFilePointer();
-                                float percent = (float) (currentFilePointer / fileLength) * 100;
-                                System.out.println("Download percentage: " + percent);
+                                float percent = ((float) currentFilePointer / fileLength) * 100;
+                                System.out.println("Download percentage: " + percent + "%");
                                 dataOutputStream.write(Packet.createDataPacket(Packet.COMMAND_REQUEST_SEND_FILE_DATA, String.valueOf(currentFilePointer).getBytes("UTF8")));
                                 dataOutputStream.flush();
                                 break;
@@ -126,6 +126,7 @@ public class Server implements Runnable {
 
     /**
      * Mặc định nơi lưu file là workingDir + "/res/files/"
+     *
      * @param args
      * @throws IOException
      */
