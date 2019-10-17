@@ -82,10 +82,10 @@ public class Server implements Runnable {
                 try {
                     if (dataInputStream.readByte() == Packet.INITIALIZE) {
                         int b = 0;
+                        dataInputStream.readByte(); // tieu thu SEPARATOR
                         byte[] cmd_buff = new byte[3];
                         dataInputStream.read(cmd_buff, 0, cmd_buff.length);
                         byte[] recv_data = Packet.readStream(dataInputStream);
-                        System.out.println(new String(cmd_buff));
                         switch (new String(cmd_buff)) {
                             case Packet.COMMAND_SEND_FILE_NAME:
                                 fileName = new String(recv_data);
@@ -102,6 +102,7 @@ public class Server implements Runnable {
                                 current_file_pointer = randomAccessFile.getFilePointer();
                                 float percent = (float) (current_file_pointer / fileLength) * 100;
                                 System.out.println("Download percentage: " + percent);
+                                dataOutputStream.write(Packet.createDataPacket(Packet.COMMAND_REQUEST_SEND_FILE_DATA, String.valueOf(current_file_pointer).getBytes("UTF8")));
                                 dataOutputStream.flush();
                                 break;
                             case Packet.COMMAND_SEND_FINISH:
@@ -124,6 +125,6 @@ public class Server implements Runnable {
     }
 
     public static void main(String[] args) throws IOException {
-        new Server(16057, "C:/Users/Tran Phu Quy/Documents/IntelliJ IDEA Projects/JavaNetworkProgramming/");
+        new Server(16057, "/home/tranphuquy19/Documents/NetworkProgramming");
     }
 }

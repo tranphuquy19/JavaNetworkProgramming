@@ -24,6 +24,7 @@ public class Packet {
     public static byte[] createDataPacket(String command, byte[] data) throws IOException {
         if (data.length == 0) throw new IOException();
 
+        //packet =  [INITIALIZE(1bytes)-SEPARATOR(1bytes)-COMMAND(1bytes)-DATA_LENGTH(1byte)-DATA(data_length(bytes)]
         byte[] initialize = new byte[1];
         initialize[0] = INITIALIZE;
         byte[] separator = new byte[1];
@@ -65,7 +66,7 @@ public class Packet {
         byte[] data_buff = null;
         int b = 0;
         String buff_length = "";
-        while ((b = dataInputStream.read()) != SEPARATOR) {
+        while ((b = dataInputStream.readByte()) != SEPARATOR) {
             buff_length += (char) b;
         }
         int data_length = Integer.parseInt(buff_length);

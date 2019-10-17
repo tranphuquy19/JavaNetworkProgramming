@@ -35,28 +35,27 @@ public class Client {
 
     public void sendFile(String filePath) throws IOException {
         File sourceFile = new File(filePath);
-        System.out.println(sourceFile.getPath());
-        dataOutputStream.write(Packet.createDataPacket(Packet.COMMAND_SEND_FILE, sourceFile.getName().getBytes("UTF8")));
+        byte[] temp = Packet.createDataPacket(Packet.COMMAND_SEND_FILE, sourceFile.getName().getBytes("UTF8"));
+        dataOutputStream.write(temp);
         dataOutputStream.write(Packet.createDataPacket(Packet.COMMAND_SEND_FILE_NAME, sourceFile.getName().getBytes("UTF8")));
-
         RandomAccessFile randomAccessFile = new RandomAccessFile(sourceFile, "r");
-        dataOutputStream.write(Packet.createDataPacket((Packet.COMMAND_SEND_FILE_LENGTH, String.valueOf(randomAccessFile.length()).getBytes("UTF8")));
 
+        dataOutputStream.write(Packet.createDataPacket(Packet.COMMAND_SEND_FILE_LENGTH, String.valueOf(randomAccessFile.length()).getBytes("UTF8")));
         long current_file_pointer;
         boolean loop_break = false;
-        while (!socket.isClosed()) {
-            System.out.println("Sending the file");
-            if (dataInputStream.read() == Packet.INITIALIZE) {
-                int b = 0;
 
+        while (!socket.isClosed()) {
+            if (dataInputStream.readByte() == Packet.INITIALIZE) {
+                int b = 0;
+                dataInputStream.readByte(); // tiêu thụ SEPARATOR
                 byte[] cmd_buff = new byte[3];
                 dataInputStream.read(cmd_buff, 0, cmd_buff.length);
 
                 byte[] recv_buff = Packet.readStream(dataInputStream);
-                switch (new String(recv_buff)) {
+
+                switch (new String(cmd_buff)) {
                     case Packet.COMMAND_REQUEST_SEND_FILE_DATA:
                         current_file_pointer = Long.valueOf(new String(recv_buff));
-
                         long residual_len = randomAccessFile.length() - current_file_pointer; //phần dư ra sau khi cắt file
                         int buff_len = (int) (residual_len < MAX_LENGTH_SEND ? residual_len : MAX_LENGTH_SEND); // tính toán phần data phải gửi
                         byte[] temp_buff = new byte[buff_len];
@@ -83,11 +82,12 @@ public class Client {
                 break;
             }
         }// end while
-        System.out.println("out while");
     }
 
     public static void main(String[] args) throws IOException {
         Client client = new Client("0.0.0.0", 16057);
-        client.sendFile("C:/Users/Tran Phu Quy/Downloads/VS80sp1-KB926601-X86-ENU.exe");
+        if (!args[0].isEmpty()) {
+            client.sendFile(args[0]);
+        }
     }
 }
