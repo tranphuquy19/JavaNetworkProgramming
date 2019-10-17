@@ -1,6 +1,6 @@
 package tk.doraneko.tcp.sendfile.largefile;
 
-import tk.doraneko.commons.FileInfo;
+import tk.doraneko.tcp.sendfile.largefile.models.Packet;
 
 import java.io.*;
 import java.net.ServerSocket;
@@ -70,81 +70,49 @@ public class Server implements Runnable {
             dataOutputStream = new DataOutputStream(socket.getOutputStream());
         }
 
-        private byte[] readStream() throws IOException {
-            byte[] dataBuffer = null;
-            int b = 0;
-            String bufferLength = "";
-            while ((b = dataInputStream.read()) != 4) {
-                bufferLength += (char) b;
-            }
-            int dataLength = Integer.parseInt(bufferLength);
-            dataBuffer = new byte[dataLength];
-
-            int byteRead = 0;
-            int byteOffset = 0;
-
-            while (byteOffset < dataLength) {
-                byteRead = dataInputStream.read(dataBuffer, byteOffset, dataLength - byteOffset);
-                byteOffset += byteRead;
-            }
-
-            return dataBuffer;
-        }
-
-        private byte[] createDataPacket(byte[] cmd, byte[] data) throws UnsupportedEncodingException {
-            byte[] packet = null;
-
-            byte[] initialize = new byte[1];
-            initialize[0] = 2;
-            byte[] separator = new byte[1];
-            separator[0] = 4;
-            byte[] dataLength = String.valueOf(data.length).getBytes("UTF8");
-            packet = new byte[initialize.length + cmd.length + separator.length + dataLength.length + data.length];
-
-            System.arraycopy(initialize, 0, packet, 0, initialize.length);
-            System.arraycopy(cmd, 0, packet, initialize.length, cmd.length);
-            System.arraycopy(dataLength, 0, packet, initialize.length + cmd.length, dataLength.length);
-            System.arraycopy(separator, 0, packet, initialize.length + cmd.length + dataLength.length, separator.length);
-            System.arraycopy(data, 0, packet, initialize.length + cmd.length + dataLength.length + separator.length, data.length);
-
-            return packet;
-        }
-
         public void run() {
+            System.out.println("Listening client");
             RandomAccessFile randomAccessFile = null;
             long current_file_pointer = 0;
+            String fileName = "";
+            long fileLength = 1;
             boolean loop_break = false;
 
             while (!socket.isClosed()) {
-                byte[] initialize = new byte[1];
                 try {
-                    dataInputStream.read(initialize, 0, initialize.length);
-                    if (initialize[0] == 2) {
-                        byte[] buffer = new byte[3];
-                        dataInputStream.read(buffer, 0, buffer.length);
-                        byte[] dataIn = readStream();
-                        switch (Integer.parseInt(new String(buffer))) {
-                            case 124:
-                                randomAccessFile = new RandomAccessFile(FileInfo.getCureentWorkingDir() + "/res/files/" + new String(dataIn), "rw");
-                                dataOutputStream.write(createDataPacket("125".getBytes("UTF8"), String.valueOf(current_file_pointer).getBytes("UTF8")));
+                    if (dataInputStream.readByte() == Packet.INITIALIZE) {
+                        int b = 0;
+                        byte[] cmd_buff = new byte[3];
+                        dataInputStream.read(cmd_buff, 0, cmd_buff.length);
+                        byte[] recv_data = Packet.readStream(dataInputStream);
+                        System.out.println(new String(cmd_buff));
+                        switch (new String(cmd_buff)) {
+                            case Packet.COMMAND_SEND_FILE_NAME:
+                                fileName = new String(recv_data);
+                                randomAccessFile = new RandomAccessFile(workingDir + "/res/files/" + fileName, "rw");
+                                dataOutputStream.write(Packet.createDataPacket(Packet.COMMAND_REQUEST_SEND_FILE_DATA, String.valueOf(current_file_pointer).getBytes("UTF8")));
                                 dataOutputStream.flush();
                                 break;
-                            case 126:
+                            case Packet.COMMAND_SEND_FILE_LENGTH:
+                                fileLength = Long.parseLong(new String(recv_data));
+                                break;
+                            case Packet.COMMAND_SEND_FILE_DATA:
                                 randomAccessFile.seek(current_file_pointer);
-                                randomAccessFile.write(dataIn);
+                                randomAccessFile.write(recv_data);
                                 current_file_pointer = randomAccessFile.getFilePointer();
-                                System.out.println("Download percentage: " + (int) (current_file_pointer / randomAccessFile.length() * 100) + "%");
-                                dataOutputStream.write(createDataPacket("125".getBytes("UTF8"), String.valueOf(current_file_pointer).getBytes("UTF8")));
+                                float percent = (float) (current_file_pointer / fileLength) * 100;
+                                System.out.println("Download percentage: " + percent);
                                 dataOutputStream.flush();
                                 break;
-                            case 127:
-                                if ("Close".equals(new String(dataIn))) {
+                            case Packet.COMMAND_SEND_FINISH:
+                                if ("Close".equals(new String(recv_data))) {
                                     loop_break = true;
                                 }
                                 break;
                         }
-                    } //end if
-                    if (loop_break == true) {
+                    }
+                    if (loop_break) {
+                        randomAccessFile.close();
                         socket.close();
                     }
                 } catch (IOException e) {
@@ -153,5 +121,9 @@ public class Server implements Runnable {
             } //end while
         }
 
+    }
+
+    public static void main(String[] args) throws IOException {
+        new Server(16057, "C:/Users/Tran Phu Quy/Documents/IntelliJ IDEA Projects/JavaNetworkProgramming/");
     }
 }
