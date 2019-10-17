@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<classpath>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="src" path="java"/>
-	<classpathentry kind="src" path="resources"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/Gradle: mysql:mysql-connector-java:8.0.17"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/Gradle: com.google.protobuf:protobuf-java:3.6.1"/>
-	<classpathentry kind="output" path="bin"/>
-</classpath>

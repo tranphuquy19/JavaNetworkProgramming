@@ -2,6 +2,15 @@ unnamed package
 tk.doraneko.app
 tk.doraneko.commons
 tk.doraneko.tcp.chat.simple
+tk.doraneko.tcp.sendfile.largefile
+tk.doraneko.tcp.sendfile.largefile.models
 tk.doraneko.tcp.sendfile.simple
 tk.doraneko.test
+tk.doraneko.test.swingtest
+tk.doraneko.test.threelayerpattern
+tk.doraneko.test.threelayerpattern.bus
+tk.doraneko.test.threelayerpattern.dao
+tk.doraneko.test.threelayerpattern.dto
+tk.doraneko.test.threelayerpattern.gui
+tk.doraneko.test.threelayerpattern.utils
 tk.doraneko.udp.chat.simple
