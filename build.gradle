@@ -22,4 +22,5 @@ jar {
 dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.12'
     implementation 'mysql:mysql-connector-java:8.0.17'
+    implementation 'io.socket:socket.io-client:1.0.0'
 }

@@ -1,6 +1,7 @@
 unnamed package
 tk.doraneko.app
 tk.doraneko.commons
+tk.doraneko.socketio.client
 tk.doraneko.tcp.chat.simple
 tk.doraneko.tcp.sendfile.largefile
 tk.doraneko.tcp.sendfile.largefile.models
@@ -14,3 +15,4 @@ tk.doraneko.test.threelayerpattern.dto
 tk.doraneko.test.threelayerpattern.gui
 tk.doraneko.test.threelayerpattern.utils
 tk.doraneko.udp.chat.simple
+tk.doraneko.udp.sendfile.simple
