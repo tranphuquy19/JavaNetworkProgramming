@@ -90,8 +90,16 @@ public class Client {
     public static void main(String[] args) throws IOException {
         Client client;
         Scanner sc = new Scanner(System.in);
-        if (!args[0].isEmpty()) {
-            String temp = args[0];
+        String cmdArgs = null;
+
+        try {
+            cmdArgs = args[0];
+        } catch (ArrayIndexOutOfBoundsException e) {
+            e.printStackTrace();
+        }
+
+        if (!cmdArgs.isEmpty()) {
+            String temp = cmdArgs;
             if ("true".equals(temp)) {
                 while (true) {
                     client = new Client("0.0.0.0", 16057);

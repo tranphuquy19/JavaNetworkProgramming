@@ -1,0 +1,5 @@
+# Install project
+
+```
+    npm install
+```
