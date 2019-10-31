@@ -27,15 +27,16 @@ public class TakeScreenShot {
             Robot robot = new Robot();
             int count = 1;
             long beforeTime = System.currentTimeMillis();
-            while ( count < 20 ) {
+            while ( count < 15 ) {
                 BufferedImage buffImage = robot.createScreenCapture( rect );
                 ByteArrayOutputStream bios = new ByteArrayOutputStream();
                 ImageIO.write(buffImage, "jpg", bios);
                 byte[] imgArr = bios.toByteArray();
+                System.out.println(imgArr.length);
                 count++;
             }
             double time = System.currentTimeMillis() - beforeTime;
-            System.out.println( "Seconds it took for 32 screen captures: " + time / 1000 );
+            System.out.println( "Seconds it took for 15 screen captures: " + time / 1000 );
         } catch ( Exception e ) { }
 
     }
