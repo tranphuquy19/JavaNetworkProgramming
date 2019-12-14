@@ -40,9 +40,9 @@ public class StringProcessing {
         return result;
     }
 
-    public static String reverstString(String s){
+    public static String reverstString(String s) {
         String result = "";
-        for(int i = s.length() - 1; i >= 0; i--){
+        for (int i = s.length() - 1; i >= 0; i--) {
             result += s.charAt(i);
         }
         return result;
